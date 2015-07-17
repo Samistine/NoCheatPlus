@@ -17,8 +17,8 @@
     <module>NCPBuildBase</module>
     <module>NCPCommons</module>
     <module>NCPCore</module>
-<!--    <module>NCPCompatBukkit</module>
-    <module>NCPCompatCB2512</module>
+    <module>NCPCompatBukkit</module>
+<!--    <module>NCPCompatCB2512</module>
     <module>NCPCompatCB2545</module>
     <module>NCPCompatCB2602</module>
     <module>NCPCompatCB2645</module>
