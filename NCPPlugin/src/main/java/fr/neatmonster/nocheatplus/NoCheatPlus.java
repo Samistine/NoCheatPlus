@@ -1179,7 +1179,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             }
         }
         // Mod message (left on low instead of lowest to allow some permissions plugins compatibility).
-        ModUtil.motdOnJoin(player);
+        //ModUtil.motdOnJoin(player);
     }
 
     protected void onLeave(final Player player) {
