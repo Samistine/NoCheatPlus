@@ -1166,8 +1166,8 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             /-/ Message if notify is turned off.
             if (data.getNotifyOff()) {
                 sendMessageOnTick(playerName, MSG_NOTIFY_OFF);
-            }*/
-        }
+            }
+        }*/
         // JoinLeaveListenerS: Do update comment in NoCheatPlusAPI with changing event priority.
         for (final JoinLeaveListener jlListener : joinLeaveListeners){
             try{
