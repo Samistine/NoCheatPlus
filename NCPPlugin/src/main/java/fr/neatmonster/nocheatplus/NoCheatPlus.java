@@ -1155,12 +1155,12 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         /*if (nameSetPerms.hasPermission(playerName, Permissions.NOTIFY)){
             /-/ Login notifications...
             final PlayerData data = DataManager.getPlayerData(playerName, true);
-            /-/			// Update available.
+            /-/			/-/ Update available.
             /-/			if (updateAvailable) player.sendMessage(ChatColor.RED + "NCP: " + ChatColor.WHITE + "A new update of NoCheatPlus is available.\n" + "Download it at http://nocheatplus.org/update");
 
             /-/ Inconsistent config version.
             if (configProblems != null && ConfigManager.getConfigFile().getBoolean(ConfPaths.CONFIGVERSION_NOTIFY)) {
-                // Could use custom prefix from logging, however ncp should be mentioned then.
+                /-/ Could use custom prefix from logging, however ncp should be mentioned then.
                 sendMessageOnTick(playerName, ChatColor.RED + "NCP: " + ChatColor.WHITE + configProblems);
             }
             /-/ Message if notify is turned off.
