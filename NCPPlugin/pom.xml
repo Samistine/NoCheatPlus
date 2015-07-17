@@ -25,7 +25,7 @@
     	<artifactId>ncpcompatbukkit</artifactId>
     	<version>1.1-SNAPSHOT</version>
     </dependency>
-    <dependency>
+    <!--<dependency>
     	<groupId>fr.neatmonster</groupId>
     	<artifactId>ncpcompatcb2512</artifactId>
     	<version>1.1-SNAPSHOT</version>
@@ -89,7 +89,7 @@
         <groupId>fr.neatmonster</groupId>
         <artifactId>ncpcompatcb3100</artifactId>
         <version>1.1-SNAPSHOT</version>
-    </dependency>
+    </dependency>-->
     <dependency>
         <groupId>fr.neatmonster</groupId>
         <artifactId>ncpcompatspigotcb1_8_r1</artifactId>
