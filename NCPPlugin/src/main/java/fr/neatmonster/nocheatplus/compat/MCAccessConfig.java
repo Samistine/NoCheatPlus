@@ -6,13 +6,21 @@ import fr.neatmonster.nocheatplus.config.ConfigManager;
 
 public class MCAccessConfig {
 
-    public final boolean enableCBDedicated;
-    public final boolean enableCBReflect;
+    private final boolean enableCBDedicated;
+    private final boolean enableCBReflect;
 
     public MCAccessConfig() {
         final ConfigFile config = ConfigManager.getConfigFile();
         this.enableCBDedicated = config.getBoolean(ConfPaths.COMPATIBILITY_SERVER_CBDEDICATED_ENABLE);
         this.enableCBReflect = config.getBoolean(ConfPaths.COMPATIBILITY_SERVER_CBREFLECT_ENABLE);
+    }
+
+    public boolean isEnableCBDedicated() {
+        return enableCBDedicated;
+    }
+
+    public boolean isEnableCBReflect() {
+        return enableCBReflect;
     }
 
 }

@@ -35,7 +35,7 @@ public class MCAccessFactory {
         // Try to set up native access.
 
         // CraftBukkit (dedicated).
-        if (config.enableCBDedicated) {
+        if (config.isEnableCBDedicated()) {
             mcAccess = getMCAccessCraftBukkit(throwables);
             if (mcAccess != null) {
                 return mcAccess;
@@ -43,7 +43,7 @@ public class MCAccessFactory {
         }
 
         // CraftBukkit (reflection).
-        if (config.enableCBReflect) {
+        if (config.isEnableCBReflect()) {
             try {
                 return new MCAccessCBReflect();
             }
