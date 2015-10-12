@@ -1150,11 +1150,11 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         };
     }
 
-    protected void onJoinLow(final Player player){
-        final String playerName = player.getName();
+    protected void onJoinLow(Player player){
+        String playerName = player.getName();
         if (nameSetPerms.hasPermission(playerName, Permissions.NOTIFY)){
             // Login notifications...
-            final PlayerData data = DataManager.getPlayerData(playerName, true);
+            PlayerData data = DataManager.getPlayerData(playerName, true);
             //			// Update available.
             //			if (updateAvailable) player.sendMessage(ChatColor.RED + "NCP: " + ChatColor.WHITE + "A new update of NoCheatPlus is available.\n" + "Download it at http://nocheatplus.org/update");
 
@@ -1169,7 +1169,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             }
         }
         // JoinLeaveListenerS: Do update comment in NoCheatPlusAPI with changing event priority.
-        for (final JoinLeaveListener jlListener : joinLeaveListeners){
+        for (JoinLeaveListener jlListener : joinLeaveListeners){
             try{
                 jlListener.playerJoins(player);
             }
@@ -1182,11 +1182,11 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         ModUtil.motdOnJoin(player);
     }
 
-    protected void onLeave(final Player player) {
-        for (final PermStateReceiver pr : permStateReceivers) {
+    protected void onLeave(Player player) {
+        for (PermStateReceiver pr : permStateReceivers) {
             pr.removePlayer(player.getName());
         }
-        for (final JoinLeaveListener jlListener : joinLeaveListeners){
+        for (JoinLeaveListener jlListener : joinLeaveListeners){
             try{
                 jlListener.playerLeaves(player);
             }
@@ -1200,17 +1200,16 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         }
     }
 
-    protected void updatePermStateReceivers(final Player player) {
-        final Map<String, Boolean> checked = new HashMap<String, Boolean>(20);
-        final String name = player.getName();
-        for (final PermStateReceiver pr : permStateReceivers) {
-            for (final String permission : pr.getDefaultPermissions()) {
+    protected void updatePermStateReceivers(Player player) {
+        Map<String, Boolean> checked = new HashMap<String, Boolean>(20);
+        for (PermStateReceiver pr : permStateReceivers) {
+            for (String permission : pr.getDefaultPermissions()) {
                 Boolean state = checked.get(permission);
                 if (state == null) {
                     state = player.hasPermission(permission);
                     checked.put(permission, state);
                 }
-                pr.setPermission(name, permission, state);
+                pr.setPermission(player.getName(), permission, state);
             }
         }
     }
@@ -1244,7 +1243,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         }
         final long tEnd = tStart + config.getLong(ConfPaths.DATA_CONSISTENCYCHECKS_MAXTIME, 1, 50, 2);
         if (consistencyCheckerIndex >= consistencyCheckers.size()) consistencyCheckerIndex = 0;
-        final Player[] onlinePlayers = BridgeMisc.getOnlinePlayers();
+        Player[] onlinePlayers = BridgeMisc.getOnlinePlayers();
         // Loop
         while (consistencyCheckerIndex < consistencyCheckers.size()){
             final ConsistencyChecker checker = consistencyCheckers.get(consistencyCheckerIndex);
