@@ -1064,7 +1064,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         // Just sets it and propagates it.
         // TODO: Might fire a NCPSetMCAccessEvent (include getting and setting)!
         this.mcAccess = mcAccess;
-        for (final Object obj : this.allComponents){
+        for (Object obj : this.allComponents){
             if (obj instanceof MCAccessHolder){
                 try{
                     ((MCAccessHolder) obj).setMCAccess(mcAccess);
@@ -1246,7 +1246,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         Player[] onlinePlayers = BridgeMisc.getOnlinePlayers();
         // Loop
         while (consistencyCheckerIndex < consistencyCheckers.size()){
-            final ConsistencyChecker checker = consistencyCheckers.get(consistencyCheckerIndex);
+            ConsistencyChecker checker = consistencyCheckers.get(consistencyCheckerIndex);
             try{
                 checker.checkConsistency(onlinePlayers);
             }
