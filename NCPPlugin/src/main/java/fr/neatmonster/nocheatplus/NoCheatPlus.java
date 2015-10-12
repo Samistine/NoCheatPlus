@@ -1101,7 +1101,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
     private Listener getCoreListener() {
         return new NCPListener() {
             @EventHandler(priority = EventPriority.NORMAL)
-            public void onPlayerLogin(final PlayerLoginEvent event) {
+            public void onPlayerLogin(PlayerLoginEvent event) {
                 // (NORMAL to have chat checks come after this.)
                 if (event.getResult() != Result.ALLOWED) return;
                 final Player player = event.getPlayer();
@@ -1117,7 +1117,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             }
 
             @EventHandler(priority = EventPriority.LOWEST) // Do update comment in NoCheatPlusAPI with changing.
-            public void onPlayerJoinLowest(final PlayerJoinEvent event) {
+            public void onPlayerJoinLowest(PlayerJoinEvent event) {
                 final Player player = event.getPlayer();
                 updatePermStateReceivers(player);
                 if (clearExemptionsOnJoin) {
@@ -1126,24 +1126,24 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             }
 
             @EventHandler(priority = EventPriority.LOW)
-            public void onPlayerJoinLow(final PlayerJoinEvent event) {
+            public void onPlayerJoinLow(PlayerJoinEvent event) {
                 // LOWEST is for DataMan and CombinedListener.
                 onJoinLow(event.getPlayer());
             }
 
             @EventHandler(priority = EventPriority.LOWEST)
-            public void onPlayerchangedWorld(final PlayerChangedWorldEvent event)
+            public void onPlayerchangedWorld(PlayerChangedWorldEvent event)
             {
                 updatePermStateReceivers(event.getPlayer());
             }
 
             @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-            public void onPlayerKick(final PlayerKickEvent event) {
+            public void onPlayerKick(PlayerKickEvent event) {
                 onLeave(event.getPlayer());
             }
 
             @EventHandler(priority = EventPriority.MONITOR)
-            public void onPlayerQuit(final PlayerQuitEvent event) {
+            public void onPlayerQuit(PlayerQuitEvent event) {
                 onLeave(event.getPlayer());
             }
         };
