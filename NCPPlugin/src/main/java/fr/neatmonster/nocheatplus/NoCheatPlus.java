@@ -1104,7 +1104,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             public void onPlayerLogin(PlayerLoginEvent event) {
                 // (NORMAL to have chat checks come after this.)
                 if (event.getResult() != Result.ALLOWED) return;
-                final Player player = event.getPlayer();
+                Player player = event.getPlayer();
                 // Check if login is denied:
                 checkDenyLoginsNames();
                 if (player.hasPermission(Permissions.BYPASS_DENY_LOGIN)) return;
@@ -1118,7 +1118,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
 
             @EventHandler(priority = EventPriority.LOWEST) // Do update comment in NoCheatPlusAPI with changing.
             public void onPlayerJoinLowest(PlayerJoinEvent event) {
-                final Player player = event.getPlayer();
+                Player player = event.getPlayer();
                 updatePermStateReceivers(player);
                 if (clearExemptionsOnJoin) {
                     NCPExemptionManager.unexempt(player);
