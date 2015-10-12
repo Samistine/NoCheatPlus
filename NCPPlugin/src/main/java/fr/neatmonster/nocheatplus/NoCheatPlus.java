@@ -524,9 +524,9 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
     }
 
     @Override
-    public void removeComponent(final Object obj) {
+    public void removeComponent(Object obj) {
         if (obj instanceof Listener){
-            listeners.remove(obj);
+            listeners.remove((Listener) obj);
             listenerManager.remove((Listener) obj);
         }
         if (obj instanceof PermStateReceiver){
@@ -536,24 +536,24 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             TickTask.removeTickListener((TickListener) obj);
         }
         if (obj instanceof INotifyReload) {
-            notifyReload.remove(obj);
+            notifyReload.remove((INotifyReload) obj);
         }
         if (obj instanceof ConsistencyChecker){
-            consistencyCheckers.remove(obj);
+            consistencyCheckers.remove((ConsistencyChecker) obj);
         }
         if (obj instanceof JoinLeaveListener){
             joinLeaveListeners.remove((JoinLeaveListener) obj);
         }
         if (obj instanceof DisableListener) {
-            disableListeners.remove(obj);
+            disableListeners.remove((DisableListener) obj);
         }
 
         // Remove sub registries.
         if (obj instanceof ComponentRegistry<?>){
-            subRegistries.remove(obj);
+            subRegistries.remove((ComponentRegistry) obj);
         }
         // Remove from present registries, order prevents to remove from itself.
-        for (final ComponentRegistry<?> registry : subRegistries){
+        for (ComponentRegistry<?> registry : subRegistries){
             ReflectionUtil.invokeGenericMethodOneArg(registry, "removeComponent", obj);
         }
 
@@ -624,7 +624,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         if (verbose) {
             logManager.info(Streams.INIT, "[NoCheatPlus] onDisable calls (include DataManager cleanup)...");
         }
-        for (final DisableListener dl : disableListeners) {
+        for (DisableListener dl : disableListeners) {
             try {
                 dl.onDisable();
             } catch (Throwable t) {
