@@ -95,6 +95,7 @@ import fr.neatmonster.nocheatplus.utilities.OnDemandTickListener;
 import fr.neatmonster.nocheatplus.utilities.ReflectionUtil;
 import fr.neatmonster.nocheatplus.utilities.StringUtil;
 import fr.neatmonster.nocheatplus.utilities.TickTask;
+import java.util.Iterator;
 
 /**
  * This is the main class of NoCheatPlus. The commands, events listeners and tasks are registered here.
@@ -230,14 +231,14 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
      * Remove expired entries.
      */
     private void checkDenyLoginsNames() {
-        final long ts = System.currentTimeMillis();
-        final List<String> rem = new LinkedList<String>();
+        long ts = System.currentTimeMillis();
         synchronized (denyLoginNames) {
-            for (final Entry<String, Long> entry : denyLoginNames.entrySet()){
-                if (entry.getValue() < ts)  rem.add(entry.getKey());
-            }
-            for (String name : rem){
-                denyLoginNames.remove(name);
+            Iterator<Entry<String, Long>> i = denyLoginNames.entrySet().iterator();
+            while (i.hasNext()) {
+                Entry<String, Long> entry = i.next();
+                if (entry.getValue() < ts) { 
+                    denyLoginNames.remove(entry.getKey());
+                }
             }
         }
     }
