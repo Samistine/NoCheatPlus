@@ -6,40 +6,38 @@ import fr.neatmonster.nocheatplus.config.DefaultConfig;
 
 public class Updates {
 	
-	/**
-	 * 
-	 * @param config
-	 * @return null if everything is fine, a string with a message stating problems otherwise.
-	 */
-	public static String isConfigUpToDate(ConfigFile config){
-        Object created = config.get(ConfPaths.CONFIGVERSION_CREATED);
-        if (created != null && created instanceof Integer){
-        	int buildCreated = ((Integer) created).intValue();
-        	if (buildCreated < DefaultConfig.buildNumber){
-        		// Potentially outdated Configuration.
-        		return "Your configuration might be outdated.\n" + "Some settings could have changed, you should regenerate it!";
-        	}
-        	else if (buildCreated > DefaultConfig.buildNumber){
-        		// Installed an older version of NCP.
-        		return "Your configuration seems to be created by a newer plugin version.\n" + "Some settings could have changed, you should regenerate it!";
-        	}
-        	else{
-        		return null;
-        	}
+    /**
+     * 
+     * @param config
+     * @return null if everything is fine, a string with a message stating problems otherwise.
+     */
+    public static String isConfigUpToDate(ConfigFile config){
+        int created = config.getInt(ConfPaths.CONFIGVERSION_CREATED);
+        if (created < DefaultConfig.buildNumber){
+            // Potentially outdated Configuration.
+            return "Your configuration might be outdated.\n" + "Some settings could have changed, you should regenerate it!";
         }
-        // Error or not: could not determine versions, thus ignore.
-        return null;
-	}
+        else if (created > DefaultConfig.buildNumber){
+            // Installed an older version of NCP.
+            return "Your configuration seems to be created by a newer plugin version.\n" + "Some settings could have changed, you should regenerate it!";
+        }
+        else{
+            //Error or not: could not determine versions, thus ignore.
+            //This will also be called when the version is the same
+            return null;
+        }
+    }
 
-	/**
-	 * To be called from an async task.
-	 * @param versionString Current version string (getDescription().getVersion()).
-	 * @param updateTimeout
-	 * @return
-	 */
-	public static boolean checkForUpdates(String versionString, int updateTimeout) {
+    /**
+     * To be called from an async task.
+     * 
+     * @param versionString Current version string (getDescription().getVersion()).
+     * @param updateTimeout
+     * @return
+     */
+    public static boolean checkForUpdates(String versionString, int updateTimeout) {
 //		BufferedReader bufferedReader = null;
-    	boolean updateAvailable = false;
+        boolean updateAvailable = false;
 //        try {
 //        	final String[] split = versionString.split("-b");
 //            final int currentVersion = Integer.parseInt(split[split.length - 1]);
@@ -58,5 +56,5 @@ public class Updates {
 //        	if (bufferedReader != null) try{bufferedReader.close();}catch (IOException e){};
 //        }
         return updateAvailable;
-	}
+    }
 }
