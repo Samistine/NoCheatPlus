@@ -939,8 +939,9 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
 
     /**
      * Actions to be done after enable of  all plugins. This aims at reloading mainly.
+     * @param onlinePlayers current players online
      */
-    protected void postEnable(final NoCheatPlusCommand commandHandler, final Player[] onlinePlayers){
+    protected void postEnable(NoCheatPlusCommand commandHandler, Player[] onlinePlayers){
         logManager.info(Streams.INIT, "[NoCheatPlus] Post-enable running...");
         try {
             // Set child permissions for commands for faster checking.
@@ -958,13 +959,13 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
             logManager.severe(Streams.INIT, "[NoCheatPlus] Failed to apply command protection: " + t.getClass().getSimpleName());
             logManager.severe(Streams.INIT, t);
         }
-        for (final Player player : onlinePlayers){
+        for (Player player : onlinePlayers){
             updatePermStateReceivers(player);
             if (player.isSleeping()) {
                 CombinedData.getData(player).wasInBed = true;
             }
         }
-        // TODO: if (online.lenght > 0) LogUtils.logInfo("[NCP] Updated " + online.length + "players (post-enable).")
+        if (onlinePlayers.length > 0) logManager.info(Streams.INIT, "[NCP] Updated " + onlinePlayers.length + "players (post-enable).");
         logManager.info(Streams.INIT, "[NoCheatPlus] Post-enable finished.");
         logManager.info(Streams.DEFAULT_FILE, StringUtil.join(VersionCommand.getVersionInfo(), "\n")); // Queued (!).
     }
