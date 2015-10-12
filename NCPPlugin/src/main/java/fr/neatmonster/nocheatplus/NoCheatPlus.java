@@ -144,7 +144,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
      * Commands that were changed for protecting them against tab complete or
      * use.
      */
-    protected List<CommandProtectionEntry> changedCommands = null;
+    protected List<CommandProtectionEntry> changedCommands = new ArrayList<CommandProtectionEntry>();
 
 
     private final ListenerManager listenerManager = new ListenerManager(this, false);
@@ -652,9 +652,9 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         if (verbose) {
             logManager.info(Streams.INIT, "[NoCheatPlus] Unregister all registered components...");
         }
-        final ArrayList<Object> allComponents = new ArrayList<Object>(this.allComponents);
-        for (int i = allComponents.size() - 1; i >= 0; i--){
-            removeComponent(allComponents.get(i));
+        ArrayList<Object> components = new ArrayList<Object>(this.allComponents);
+        for (int i = components.size() - 1; i >= 0; i--){
+            removeComponent(components.get(i));
         }
 
         // Cleanup BlockProperties.
@@ -682,10 +682,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
         featureTags.clear();
 
         // Clear command changes list (compatibility issues with NPCs, leads to recalculation of perms).
-        if (changedCommands != null){
-            changedCommands.clear();
-            changedCommands = null;
-        }
+        changedCommands.clear();
         //		// Restore changed commands.
         //		if (verbose) LogUtil.logInfo("[NoCheatPlus] Undo command changes...");
         //		undoCommandChanges();
@@ -717,40 +714,30 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
      * @deprecated Leads to compatibility issues with NPC plugins such as Citizens 2, due to recalculation of permissions (specifically during disabling).
      */
     public void undoCommandChanges() {
-        if (changedCommands != null){
-            while (!changedCommands.isEmpty()){
-                final CommandProtectionEntry entry = changedCommands.remove(changedCommands.size() - 1);
-                entry.restore();
-            }
-            changedCommands = null;
+        Iterator<CommandProtectionEntry> i = changedCommands.iterator();
+        while (i.hasNext()){
+            i.next().restore();
         }
     }
 
     protected void setupCommandProtection() {
         // TODO: Might re-check with plugins enabling during runtime (!).
-        final List<CommandProtectionEntry> changedCommands = new LinkedList<CommandProtectionEntry>();
+        
         // Read lists and messages from config.
-        final ConfigFile config = ConfigManager.getConfigFile();
+        ConfigFile config = ConfigManager.getConfigFile();
         // (Might add options to invert selection.)
         // "No permission".
         // TODO: Could/should set permission message to null here (server default), might use keyword "default".
-        final List<String> noPerm = config.getStringList(ConfPaths.PROTECT_PLUGINS_HIDE_NOPERMISSION_CMDS);
+        List<String> noPerm = config.getStringList(ConfPaths.PROTECT_PLUGINS_HIDE_NOPERMISSION_CMDS);
         if (noPerm != null && !noPerm.isEmpty()){
-            final String noPermMsg = ColorUtil.replaceColors(ConfigManager.getConfigFile().getString(ConfPaths.PROTECT_PLUGINS_HIDE_NOPERMISSION_MSG));
+            String noPermMsg = ColorUtil.replaceColors(ConfigManager.getConfigFile().getString(ConfPaths.PROTECT_PLUGINS_HIDE_NOPERMISSION_MSG));
             changedCommands.addAll(PermissionUtil.protectCommands(Permissions.FILTER_COMMAND, noPerm,  true, false, noPermMsg));
         }
         // "Unknown command", override the other option.
-        final List<String> noCommand = config.getStringList(ConfPaths.PROTECT_PLUGINS_HIDE_NOCOMMAND_CMDS);
+        List<String> noCommand = config.getStringList(ConfPaths.PROTECT_PLUGINS_HIDE_NOCOMMAND_CMDS);
         if (noCommand != null && !noCommand.isEmpty()){
-            final String noCommandMsg = ColorUtil.replaceColors(ConfigManager.getConfigFile().getString(ConfPaths.PROTECT_PLUGINS_HIDE_NOCOMMAND_MSG));
+            String noCommandMsg = ColorUtil.replaceColors(ConfigManager.getConfigFile().getString(ConfPaths.PROTECT_PLUGINS_HIDE_NOCOMMAND_MSG));
             changedCommands.addAll(PermissionUtil.protectCommands(Permissions.FILTER_COMMAND, noCommand,  true, false, noCommandMsg));
-        }
-        // Add to changes history for undoing.
-        if (this.changedCommands == null) {
-            this.changedCommands = changedCommands;
-        }
-        else {
-            this.changedCommands.addAll(changedCommands);
         }
     }
 
