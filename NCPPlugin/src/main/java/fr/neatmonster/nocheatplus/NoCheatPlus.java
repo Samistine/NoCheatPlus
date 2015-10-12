@@ -494,7 +494,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
      * Interfaces checked for managed listeners: IHaveMethodOrder (method), ComponentWithName (tag)<br>
      * @param listener
      */
-    private void addListener(final Listener listener) {
+    private void addListener(Listener listener) {
         // private: Use addComponent.
         if (manageListeners){
             String tag = "NoCheatPlus";
